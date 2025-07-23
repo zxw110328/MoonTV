@@ -100,6 +100,7 @@ export async function GET(request: Request) {
       title: item.title,
       poster: item.cover,
       rate: item.rate,
+      year: '',
     }));
 
     const response: DoubanResult = {
@@ -108,7 +109,7 @@ export async function GET(request: Request) {
       list: list,
     };
 
-    const cacheTime = getCacheTime();
+    const cacheTime = await getCacheTime();
     return NextResponse.json(response, {
       headers: {
         'Cache-Control': `public, max-age=${cacheTime}`,
@@ -171,6 +172,7 @@ function handleTop250(pageStart: number) {
           title: title,
           poster: processedCover,
           rate: rate,
+          year: '',
         });
       }
 
@@ -180,7 +182,7 @@ function handleTop250(pageStart: number) {
         list: movies,
       };
 
-      const cacheTime = getCacheTime();
+      const cacheTime = await getCacheTime();
       return NextResponse.json(apiResponse, {
         headers: {
           'Cache-Control': `public, max-age=${cacheTime}`,
